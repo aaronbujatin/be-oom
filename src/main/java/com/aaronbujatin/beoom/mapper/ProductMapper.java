@@ -2,12 +2,13 @@ package com.aaronbujatin.beoom.mapper;
 
 import com.aaronbujatin.beoom.dto.ProductDto;
 import com.aaronbujatin.beoom.entitiy.Product;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Function;
 
 
-@Service
+@Component
 public class ProductMapper implements Function<Product, ProductDto> {
 
     @Override
@@ -16,6 +17,7 @@ public class ProductMapper implements Function<Product, ProductDto> {
                 product.getName(),
                 product.getDescription(),
                 product.getBlooms(),
+                product.getCategory(),
                 product.getPrice(),
                 product.getImageUrl()
         );

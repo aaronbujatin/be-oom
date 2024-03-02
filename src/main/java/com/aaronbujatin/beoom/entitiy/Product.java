@@ -1,7 +1,6 @@
 package com.aaronbujatin.beoom.entitiy;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,7 +22,9 @@ public class Product {
     private String name;
     private String description;
     private String blooms;
+    private String category;
     private BigDecimal price;
+    @Column(length = 500000)
     private List<String> imageUrl;
 
     public Product(String name, String description, String blooms, BigDecimal price, List<String> imageUrl) {

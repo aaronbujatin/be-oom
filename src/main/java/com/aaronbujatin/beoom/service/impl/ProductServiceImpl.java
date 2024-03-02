@@ -25,6 +25,7 @@ public class ProductServiceImpl implements ProductService {
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
         product.setBlooms(productDto.getBlooms());
+        product.setCategory(productDto.getCategory());
         product.setPrice(productDto.getPrice());
         product.setImageUrl(productDto.getImageUrl());
         productRepository.save(product);
@@ -64,6 +65,15 @@ public class ProductServiceImpl implements ProductService {
         product.setBlooms(productDto.getBlooms());
         product.setPrice(productDto.getPrice());
         product.setImageUrl(productDto.getImageUrl());
+        productRepository.save(product);
         return productMapper.apply(product);
+    }
+
+    @Override
+    public List<ProductDto> getProductByCategory(String category) {
+        return productRepository.findByCategory(category)
+                .stream()
+                .map(productMapper)
+                .collect(Collectors.toList());
     }
 }
