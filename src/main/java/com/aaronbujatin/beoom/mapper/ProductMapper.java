@@ -19,7 +19,8 @@ public class ProductMapper implements Function<Product, ProductDto> {
                 product.getBlooms(),
                 product.getCategory(),
                 product.getPrice(),
-                product.getImageUrl()
+                product.getImageUrl(),
+                product.getStock()
         );
     }
 }

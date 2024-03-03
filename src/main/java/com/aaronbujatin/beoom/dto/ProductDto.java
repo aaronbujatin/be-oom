@@ -20,4 +20,5 @@ public class ProductDto {
     private String category;
     private BigDecimal price;
     private List<String> imageUrl;
+    private int stock;
 }

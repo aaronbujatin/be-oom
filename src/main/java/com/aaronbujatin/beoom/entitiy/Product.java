@@ -4,11 +4,13 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 
+@ToString
 @NoArgsConstructor
 @Getter
 @Setter
@@ -20,10 +22,12 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Column(length = 500000)
     private String description;
     private String blooms;
     private String category;
     private BigDecimal price;
+    private int stock;
     @Column(length = 500000)
     private List<String> imageUrl;
 
@@ -34,5 +38,8 @@ public class Product {
         this.price = price;
         this.imageUrl = imageUrl;
     }
+
+    @OneToOne
+    private User user;
 }
 
