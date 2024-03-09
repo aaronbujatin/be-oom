@@ -12,7 +12,7 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
 
 
     Cart findByProductId(Long id);
-    Cart findByUser(User user);
+    List<Cart> findByUser(User user);
 
     Cart findByUserAndProduct(User user, Product product);
 

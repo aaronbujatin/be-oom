@@ -39,7 +39,6 @@ public class Product {
         this.imageUrl = imageUrl;
     }
 
-    @OneToOne
-    private User user;
+
 }
 
