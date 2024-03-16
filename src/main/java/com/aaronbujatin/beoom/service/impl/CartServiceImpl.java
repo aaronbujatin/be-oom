@@ -2,6 +2,7 @@ package com.aaronbujatin.beoom.service.impl;
 
 import com.aaronbujatin.beoom.dto.CartDto;
 import com.aaronbujatin.beoom.entitiy.User;
+import com.aaronbujatin.beoom.exception.ProductOutOfStockException;
 import com.aaronbujatin.beoom.repository.CartRepository;
 import com.aaronbujatin.beoom.repository.ProductRepository;
 import com.aaronbujatin.beoom.repository.UserRepository;
@@ -29,6 +30,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public CartDto addToCart(CartDto cartRequest) {
         User user = userAuthenticationService.getAuthenticatedUser();
+        log.info("Authenticated user : {}", user);
         List<Cart> userCart = cartRepository.findByUser(user);
 
         Optional<Cart> productInCart = userCart.stream()
@@ -38,7 +40,11 @@ public class CartServiceImpl implements CartService {
         if (productInCart.isPresent()) {
             // Product already in the cart, update the quantity
             Cart cart = productInCart.get();
-            cart.setQuantity(cart.getQuantity() + cartRequest.getQuantity());
+            int productRequestQuantity = cart.getQuantity() + cartRequest.getQuantity();
+            if(productRequestQuantity >= cartRequest.getProduct().getStock()){
+                throw new ProductOutOfStockException("Product reached the maximum stock");
+            }
+            cart.setQuantity(productRequestQuantity);
             cartRepository.save(cart);
             log.info("Updated quantity for product: {}", cart.getProduct().getName());
         } else {
@@ -58,7 +64,7 @@ public class CartServiceImpl implements CartService {
             }
         }
 
-        //You might want to return something here, for example, the updated cart or a confirmation message
+
         return cartRequest;
 
     }
